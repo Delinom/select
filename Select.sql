@@ -38,9 +38,13 @@ GROUP BY a.album_id, a.album_name;
 
 SELECT DISTINCT a.author_name
 FROM authors a
-LEFT JOIN albumsauthors aa ON a.author_id = aa.author_id
-LEFT JOIN albums al ON aa.album_id = al.album_id
-WHERE al.album_year  <> 2020;
+WHERE a.author_name NOT IN (
+	SELECT DISTINCT a.author_name 
+	FROM authors
+	LEFT JOIN albumsauthors aa ON a.author_id = aa.author_id
+	LEFT JOIN albums al ON aa.album_id = al.album_id
+	WHERE al.album_year = 2021);
+
 
 SELECT DISTINCT c.collection_name
 FROM collections c
